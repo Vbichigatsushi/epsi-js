@@ -1,0 +1,36 @@
+{
+  "users": [
+    {
+      "firstname": "test",
+      "lastname": "test",
+      "email": "test@test.test",
+      "phone": "0123456789",
+      "password": "test",
+      "id": "1"
+    },
+    {
+        "firstname": "test",
+        "lastname": "test",
+        "email": "test@test.test",
+        "phone": "0123456789",
+        "password": "test",
+        "id": "2"
+    },
+    {
+        "firstname": "test",
+        "lastname": "test",
+        "email": "test@test.test",
+        "phone": "0123456789",
+        "password": "test",
+        "id": "3"
+    },
+    {
+        "firstname": "test",
+        "lastname": "test",
+        "email": "test@test.test",
+        "phone": "0123456789",
+        "password": "test",
+        "id": "4"
+    }
+  ]
+}

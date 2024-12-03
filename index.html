@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test js</title>
+</head>
+<body>
+    <section>
+        <h1>Tableau des utilisateurs</h1>
+        <table>
+            <thead>
+              <tr>
+                <th scope="col">Firstname</th>
+                <th scope="col">Lastname</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Password</th>
+                <th scope="col">Id</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h1>Ajout des utilisateurs</h1>
+        <div>
+            <button onclick="displayForm()">afficher formulaire</button>
+                <form id="form" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" placeholder="Firstname">
+
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" placeholder="Lastname">
+
+                <label for="email">Email</label>
+                <input type="mail" id="email" placeholder="Email">
+
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" placeholder="Phone">
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password">
+
+                <label for="id">ID</label>
+                <input type="number" id="id" placeholder="ID">
+                <button type="submit">Send Request</button>
+            </form>
+        </div>
+    </section>
+    <script>
+        fetch("http://localhost:3000/users").then(result => {
+            return result.json();
+        }).then(data => {
+            console.log(data);
+            const tabBody = document.getElementsByTagName("tbody");
+            data.forEach((element) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>${element.firstname}</td>
+                <td>${element.lastname}</td>
+                <td>${element.email}</td>
+                <td>${element.phone}</td>
+                <td>${element.password}</td>
+                <td>${element.id}</td>
+                <td><button onclick="suppr(${element.id})">supprimer</button></td>`;
+                tabBody[0].appendChild(row);
+            });
+        });
+
+        function displayForm(){
+            if(document.getElementById("form").style.display == "none"){
+                document.getElementById("form").style.display = "flex"
+            }else{
+                document.getElementById("form").style.display = "none"
+            }
+        }
+
+        document.getElementById('form').addEventListener("submit", (e) => {
+            e.preventDefault;
+            const data = {
+                firstname: document.getElementById('firstname').value,
+                lastname: document.getElementById('lastname').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value,
+                id: document.getElementById('id').value
+            }
+            console.log(JSON.stringify(data));
+            fetch("http://localhost:3000/users", {
+                method: 'post',
+                body: JSON.stringify(data)
+            }).then(result=> result.json())
+            .then(result=> console.log(result));
+            //location.reload;
+        });
+
+        function suppr(id){
+            fetch(`http://localhost:3000/users/${id}`, {
+                method: 'DELETE'
+            }).then(result=> result.json())
+            .then(result=> {
+                console.log(result);
+                window.reload;
+            });
+        }
+    </script>
+</body>
+</html>
